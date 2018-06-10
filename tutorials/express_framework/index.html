@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<button id="test">
+			send get request
+		</button>
+	</body>
+
+	<script>
+		$(document).ready(function(){
+			/* make sure to run this script after document fully loads */
+			/* handle request button */
+			$("#test").click(function(){
+
+				var target_url = "http://127.0.0.1:8081/process_get";
+				$.get(target_url, function(data, status){
+					// some code here
+					var response = JSON.parse(data);
+					alert(response.first_name);
+					
+				});
+			});
+		});
+	</script>
+
+</html>
