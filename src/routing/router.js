@@ -7,7 +7,8 @@ var home_routes = require('./home_routes');
 var directory_table = {
 	signin : "/../../web-pages/signin.html",
 	signup : "/../../web-pages/signup.html",
-	home : "/../../web-pages/customer-view/home.html"
+	home : "/../../web-pages/customer-view/home.html",
+	cart : "/../../web-pages/customer-view/cart.html"
 }
 
 

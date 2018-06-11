@@ -35,27 +35,38 @@
 
 	<!-- DEFINE BODY -->
 	<!-- *********************************************** -->
-	<body style="background-color: #FFFFF0;">
+	<body class="w3-light-grey">
 		
 		<!-- side tabs -->
-		<nav class="w3-sidenav w3-card-2 w3-light-grey" style="width:250px">
-			<div class="w3-blue-grey w3-padding-16" style="padding-left: 30px;">
-				<a href="#" class="w3-hover-blue-grey w3-xlarge" onclick="$('#home_hidden_form').submit(); return false;" >Amazon.com</a>
+		<nav class="w3-sidenav w3-card-2 w3-white" style="width:250px">
+
+			<!-- logo -->
+			<div class="w3-blue-grey" style="padding-left: 23px; padding-top: 40px; padding-bottom: 30px;">
+				<img id="logo_image" alt="logo">
 			</div>
 		  
-		  	<div id="display_user_name" class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 10px;"> User_Name </div>
-			<a href="#" class="w3-blue-grey">HOME</a>
-			<a href="#" onclick="$('#account_hidden_form').submit(); return false;" >ACCOUNT</a>
-			<a href="#" onclick="$('#cart_hidden_form').submit(); return false;" >SHOPPING CART</a>
-			<a href="#" onclick="$('#orders_hidden_form').submit(); return false;">MY ORDERS</a>
-			<a href="#" onclick="$('#signout_hidden_form').submit(); return false;">SIGN OUT</a>
+		  	<!-- user name -->
+		  	<div id="display_user_name" class="w3-container"
+		  		style="padding-top: 20px; font-weight: bold; padding-bottom: 10px;">
+		  		User_Name
+		  	</div>
 
-			<div id="admin_rights">
-				<div class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 5px;"> Admin Controls </div>
-				<a href="#" onclick="$('#manage_books_hidden_form').submit(); return false;">Manage Inventory</a>
-				<a href="#" onclick="$('#manage_publishers_hidden_form').submit(); return false;">Manage Publishers</a>
-				<a href="#" onclick="$('#publisher_orders_hidden_form').submit(); return false;">Publisher Orders</a>
-				<a href="#" onclick="$('#user_accounts_hidden_form').submit(); return false;">User Accounts</a>
+		  	<!-- customer access -->
+			<a id="home_btn" href="#" class="w3-blue-grey">Home</a>
+			<a id="account_btn" href="#">Account</a>
+			<a id="cart_btn" href="#">Shopping Cart</a>
+			<a id="my_orders_btn" href="#">My Orders</a>
+			<a id="signout_btn" href="#">Sign Out</a>
+
+			<!-- admin controls -->
+			<div id="admin_controls">
+				<div class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 5px;">
+					Admin Controls
+				</div>
+				<a id="manage_inventory_btn" href="#">Manage Inventory</a>
+				<a id="manage_publishers_btn" href="#">Manage Publishers</a>
+				<a id="publisher_orders_btn" href="#">Publisher Orders</a>
+				<a id="user_accounts_btn" ref="#">User Accounts</a>
 			</div>
 
 		</nav>
@@ -68,7 +79,7 @@
 			<!--search and title-->
 			<div class="w3-container" style="margin-bottom:10px;">
 				<span class="w3-text-blue-grey" style="font-size:27px; font-weight:bold; font-family: arial;">Best Sellers!</span>
-				<button class="w3-btn w3-teal w3-right" style="margin-top:5px;" onclick="$('#search_modal').show()">Search</button>
+				<button class="w3-btn w3-blue-grey w3-right" style="margin-top:5px;" onclick="$('#search_modal').show()">Search</button>
 			</div>
 
 			<!--book table-->
@@ -90,6 +101,10 @@
 				  </table>
 			</div>
 
+			<div id="no_match_msg" class="w3-container w3-xlarge w3-red w3-center" style="margin:16px;">
+				No Match Found
+			</div>
+
 			
 		</div>
 
@@ -97,7 +112,7 @@
 		<!-- search modal -->
 		<div id="search_modal" class="w3-modal">
 
-			<form class="w3-modal-content w3-animate-zoom w3-card-12" style="width:400px;" action = "/Library/home/search"  method = "post">
+			<div id="search_form" class="w3-modal-content w3-animate-zoom w3-card-12" style="width:400px;">
 
 				<header class="w3-container w3-blue-grey">
 					<h2 class="w3-xlarge">
@@ -107,7 +122,7 @@
 				</header>
 
 				<div class="w3-container w3-margin-top" style="height: 50px;">
-					<input name="searchTerm" type="text" class="w3-input w3-border" required />
+					<input id="search_term" type="text" class="w3-input w3-border" required />
 				</div>
 
 				<div class="w3-container w3-padding-8">
@@ -117,7 +132,7 @@
 				<div class="w3-row w3-container" style="padding-bottom: 40px;">
 
 					<div class="w3-col" style="width: 200px; height: 40px;">
-						<select class="w3-select w3-border w3-small" name="searchCriteria" required>
+						<select id="search_criteria" class="w3-select w3-border w3-small" required >
 							<option value="Title" selected >Title</option>
 							<option value="Author">Author</option>
 							<option value="Publisher">Publisher</option>
@@ -125,12 +140,12 @@
 					</div>
 
 					<div class="w3-col w3-right" style="width: 85px;">
-						<button class="w3-btn w3-teal w3-ripple" >Search</button>
+						<button id="search_btn" class="w3-btn w3-green w3-ripple">Search</button>
 					</div>
 
 				</div>
 
-			</form>
+			</div>
 		
 		</div>
 
@@ -145,7 +160,7 @@
 					<h2 class="w3-large w3-center">book view</h2>
 				</header>
 
-				<form class="sh-form" action="/Library/home/addBook" method="POST">
+				<form id="add_to_cart_form" class="sh-form">
 
 					<!-- user name -->
 					<div class="w3-row sh-book-attr">
@@ -154,7 +169,7 @@
 						</div>
 
 						<div class="w3-col" style="width: 400px;">
-							<input id="book_isbn" type="number" class="w3-input w3-border sh-input" readonly="readonly" name = "isbn"/>
+							<input id="book_isbn" type="number" class="w3-input w3-border sh-input" readonly name="book_isbn"/>
 						</div>
 					</div>
 
@@ -165,7 +180,7 @@
 						</div>
 
 						<div class="w3-col" style="width: 400px;">
-							<input id="book_title" type="text" class="w3-input w3-border sh-input" readonly="readonly" name = "title"/>
+							<input id="book_title" type="text" class="w3-input w3-border sh-input" readonly />
 						</div>
 					</div>
 
@@ -176,7 +191,7 @@
 						</div>
 
 						<div class="w3-col" style="width: 400px;">
-							<input id="book_author" type="text" class="w3-input w3-border sh-input" readonly="readonly" name = "author"/>
+							<input id="book_author" type="text" class="w3-input w3-border sh-input" readonly />
 						</div>
 					</div>
 
@@ -187,7 +202,7 @@
 						</div>
 
 						<div class="w3-col" style="width: 400px;">
-							<input id="book_publisher" type="text" class="w3-input w3-border sh-input" readonly="readonly" name = "publisher"/>
+							<input id="book_publisher" type="text" class="w3-input w3-border sh-input" readonly />
 						</div>
 					</div>
 
@@ -199,7 +214,7 @@
 						</div>
 
 						<div class="w3-col" style="width: 400px;">
-							<input id="book_category" type="text" class="w3-input w3-border sh-input" readonly="readonly" name = "category" />
+							<input id="book_category" type="text" class="w3-input w3-border sh-input" readonly />
 						</div>
 					</div>
 
@@ -210,7 +225,7 @@
 						</div>
 
 						<div class="w3-col" style="width: 400px;">
-							<input id="book_price" type="number" class="w3-input sh-input w3-border" readonly="readonly" name = "price" />
+							<input id="book_price" type="number" class="w3-input sh-input w3-border" readonly />
 						</div>
 					</div>
 
@@ -221,13 +236,13 @@
 						</div>
 
 						<div class="w3-col" style="width: 400px;">
-							<input id="book_year" type="date" class="w3-input sh-input w3-border"  readonly="readonly" name="date" />
+							<input id="book_year" type="date" class="w3-input sh-input w3-border"  readonly />
 						</div>
 					</div>
 
 
-					<div class="w3-container" style="padding-top: 15px;">
-						<button class="w3-btn w3-green w3-right" style="margin-right: 2px;" type="submit" >ADD TO CART</button>
+					<div class="w3-container" style="padding-top: 15px; padding-bottom: 10px;">
+						<button class="w3-btn w3-green w3-right" style="margin-right: 2px;" >ADD TO CART</button>
 					</div>
 				</form>
 
@@ -236,48 +251,6 @@
 		</div>
 
 
-		<!-- handling site navigation (hidden forms) -->
-
-		<form id="home_hidden_form" action="/Library/home" method="get" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-		<form id="account_hidden_form" action="/Library/account" method="post" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-		<form id="cart_hidden_form" action="/Library/cart" method="get" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-		<form id="orders_hidden_form" action="/Library/orders" method="post" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-		<form id="signout_hidden_form" action="/Library/signin" method="get" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-
-		<form id="manage_books_hidden_form" action="/Library/manage_inventory" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-		<form id="manage_publishers_hidden_form" action="/Library/manage_publishers" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-		<form id="publisher_orders_hidden_form" action="/Library/publiser_orders" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-		<form id="user_accounts_hidden_form" action="/Library/manage_user_accounts" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-
-
-		
 	</body>
 	
 
@@ -295,13 +268,28 @@
 			/* show/hide admin controls */
 			/******************************************/
 			var display_user_name;
-			var view_admin_rights;
+			var view_admin_controls;
 
-			if(view_admin_rights == false){
-				$("#admin_rights").remove();
+			if(view_admin_controls == false){
+				$("#admin_controls").remove();
 			}
 			$("#display_user_name").text(display_user_name);
 
+
+			/* no match error msg */
+			/******************************************/
+			$("#no_match_msg").hide();
+
+			/* setup form actions */
+			$('#add_to_cart_form').attr('action', '/home/cart');
+			$('#add_to_cart_form').attr('method', 'POST');
+
+			/* website logo */
+			/******************************************/
+			var src_url = "https://www.momdeals.com/vfiles/25-7b9c2f40aedba2587b86dad83e58312f.png";
+			$("#logo_image").attr("src", src_url);
+			$("#logo_image").attr("height", "60");
+			$("#logo_image").attr("width", "200");
 		
 			/* hide modal events */
 			/******************************************/
@@ -329,25 +317,80 @@
 		    	
 		    	// obtain data
 		    	book_list = JSON.parse(data);
-		    	var i;
-		    	for(i=0; i<book_list.length; i++)
-		    	{
-		    		var tmp_book = book_list[i];
-		    		var title = tmp_book["Title"];
-		    		var price = tmp_book["Price"];
-
-		    		var view_btn = "<button onclick='show_view_book_modal("+i+")'>view</button>";
-		    		var new_row = "<tr><td>"+title+"</td><td>"+price+"</td><td>"+view_btn+"</td></tr>";
-
-		    		$("#book_table > tbody").append(new_row);
-		    	}
+		    	update_books_view();
 		    });
+
+		    /* search form */
+			/******************************************/
+		    $('#search_btn').click(function(e){
+		    	$('.table_data').remove();
+		    	$("#search_modal").hide();
+
+		    	var term = $("#search_term").val();
+		    	var criteria = $("#search_criteria").val();
+		    	var send_data = { search_term : term, search_criteria : criteria};
+		    	var target_url = "http://127.0.0.1:8081/home/search";
+
+				$.post(target_url, send_data, function(data, status){
+					// obtain data
+			    	book_list = JSON.parse(data);
+			    	update_books_view();
+				});
+			});
+
+		    /* add btn event listeners */
+			/******************************************/
+		    $("#logo_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/home";
+      			$( location ).attr("href", target_url);
+			});
+			$("#home_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/home";
+      			$( location ).attr("href", target_url);
+			});
+			$("#account_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/account";
+      			$( location ).attr("href", target_url);
+			});
+			$("#cart_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/cart";
+      			$( location ).attr("href", target_url);
+			});
+			$("#my_orders_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/my_orders";
+      			$( location ).attr("href", target_url);
+			});
+			$("#signout_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/";
+      			$( location ).attr("href", target_url);
+			});
+
+			$("#manage_inventory_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/manage_inventory";
+      			$( location ).attr("href", target_url);
+			});
+			$("#manage_publishers_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/manage_publishers";
+      			$( location ).attr("href", target_url);
+			});
+			$("#publisher_orders_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/publisher_orders";
+      			$( location ).attr("href", target_url);
+			});
+			$("#user_accounts_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/user_accounts";
+      			$( location ).attr("href", target_url);
+			});
 
 		});
 
+
+		/*******************************
+		left outside for scoping purpose
+		********************************/
+
 		/* update view modal fields */
 		/******************************************/
-		// left outside for scoping purpose
 		function show_view_book_modal(book_index)
 		{
 			$("#book_isbn").val(book_list[book_index]["ISBN"]);
@@ -359,6 +402,27 @@
 			$("#book_year").val(book_list[book_index]["Publication_Year"]);
 
 			$('#view_book_modal').show();
+		}
+
+
+		function update_books_view()
+		{
+			$("#no_match_msg").hide();
+			if(book_list.length == 0){
+				$("#no_match_msg").show();
+			}
+			var i;
+	    	for(i=0; i<book_list.length; i++)
+	    	{
+	    		var tmp_book = book_list[i];
+	    		var title = tmp_book["Title"];
+	    		var price = tmp_book["Price"];
+
+	    		var view_btn = "<button onclick='show_view_book_modal("+i+")'>view</button>";
+	    		var new_row = "<tr class='table_data'><td>"+title+"</td><td>"+price+"</td><td>"+view_btn+"</td></tr>";
+
+	    		$("#book_table > tbody").append(new_row);
+	    	}
 		}
 
 	</script>
