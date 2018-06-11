@@ -39,7 +39,7 @@
 		
 		<!-- side tabs -->
 		<nav class="w3-sidenav w3-card-2 w3-light-grey" style="width:250px">
-			<div class="w3-blue-grey w3-padding-16" style="padding-left: 37px;">
+			<div class="w3-blue-grey w3-padding-16" style="padding-left: 30px;">
 				<a href="#" class="w3-hover-blue-grey w3-xlarge" onclick="$('#home_hidden_form').submit(); return false;" >Amazon.com</a>
 			</div>
 		  
@@ -333,8 +333,8 @@
 		    	for(i=0; i<book_list.length; i++)
 		    	{
 		    		var tmp_book = book_list[i];
-		    		var title = tmp_book["title"];
-		    		var price = tmp_book["price"];
+		    		var title = tmp_book["Title"];
+		    		var price = tmp_book["Price"];
 
 		    		var view_btn = "<button onclick='show_view_book_modal("+i+")'>view</button>";
 		    		var new_row = "<tr><td>"+title+"</td><td>"+price+"</td><td>"+view_btn+"</td></tr>";
@@ -350,13 +350,13 @@
 		// left outside for scoping purpose
 		function show_view_book_modal(book_index)
 		{
-			$("#book_isbn").val(book_list[book_index]["isbn"]);
-			$("#book_title").val(book_list[book_index]["title"]);
-			$("#book_author").val(book_list[book_index]["author"]);
-			$("#book_publisher").val(book_list[book_index]["publisher"]);
-			$("#book_category").val(book_list[book_index]["category"]);
-			$("#book_price").val(book_list[book_index]["price"]);
-			$("#book_year").val(book_list[book_index]["date"]);
+			$("#book_isbn").val(book_list[book_index]["ISBN"]);
+			$("#book_title").val(book_list[book_index]["Title"]);
+			$("#book_author").val(book_list[book_index]["Author"]);
+			$("#book_publisher").val(book_list[book_index]["Publisher"]);
+			$("#book_category").val(book_list[book_index]["Category"]);
+			$("#book_price").val(book_list[book_index]["Price"]);
+			$("#book_year").val(book_list[book_index]["Publication_Year"]);
 
 			$('#view_book_modal').show();
 		}

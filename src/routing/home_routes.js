@@ -13,19 +13,15 @@ exports.handle_routes = function(server, database, directory_table)
 	// refresh home page
 	server.get('/home/refresh_table', function (req, res) {
 		// Prepare output in JSON format
-		var entry = {
-			isbn: "123456",
-			title : "Alice I Wonderland",
-			author: "mohamed shaapan",
-			publisher : "Pearson",
-			category : "fantasy",
-			price : "180.00",
-			year : "1880"
-
-		};
-		var response = [entry];
-		console.log(response);
-		res.end(JSON.stringify(response));
+		var sql_query = "SELECT * FROM Book;";
+		database.query(sql_query, function (err, rows, fields) {
+			// handle errors
+			if (err) throw err;
+			//console.log('Book Title: ', rows[0].Title);
+			// return data
+			res.end(JSON.stringify(rows));
+		});
+		
 	});
 
 }
