@@ -16,7 +16,7 @@ exports.handle_routes = function(server, database, directory_table)
 		res.sendFile(page_path);
 	});
 
-	/* respond to GET request */
+	/* signin submit form */
 	server.post('/signin/submit', urlencodedParser, function (req, res) {
 		console.log("arrived here");
 
