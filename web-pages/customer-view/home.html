@@ -101,8 +101,8 @@
 				  </table>
 			</div>
 
-			<div id="no_match_msg" class="w3-container w3-xlarge w3-red w3-center" style="margin:16px;">
-				No Match Found
+			<div id="no_match_msg" class="w3-container w3-xlarge w3-white w3-center" style="margin:16px; display: none;">
+				Nothing Found
 			</div>
 
 			
@@ -261,7 +261,7 @@
 	<script>
 
 		/* hold book data from AJAX request */
-		var book_list;
+		var book_list = [];
 
 		$(document).ready(function(){
 

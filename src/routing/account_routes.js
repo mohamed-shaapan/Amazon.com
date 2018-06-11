@@ -21,13 +21,13 @@ exports.handle_routes = function(server, database, directory_table)
 
 	// refresh huser account info
 	server.get('/account/refresh_info', function (req, res) {
-		// Prepare output in JSON format
+
+		// get data from user SESSION
 		var sql_query = "SELECT * FROM Customer WHERE Email='tmp@tmp.com' ;";
 		database.query(sql_query, function (err, rows, fields) {
 			// handle errors
 			if (err) throw err;
 			//console.log('User: ', rows[0].Title);
-			// return data
 			res.end(JSON.stringify(rows));
 		});
 
