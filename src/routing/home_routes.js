@@ -78,5 +78,5 @@ exports.handle_routes = function(server, database, directory_table)
 		});
 
 	});
-
+	
 }

@@ -1,55 +1,64 @@
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	
-	<!-- *********************************************** -->
 	<!-- DEFINE HEADER -->
 	<!-- *********************************************** -->
 	<head>
+
 		<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<style>
 		
-			.sh-form
-			{
+			.sh-form{
 				width: 600px; padding-top: 0px; padding-bottom: 20px; padding-left: 20px; margin-top: 25px;
 			}
 
-			.sh-label
-			{
+			.sh-label{
 				width: 100px; padding-top: 8px; padding-right: 10px; text-align: right;
 			}
 
 		</style>
+
 	</head>
 	
 
-	<!-- *********************************************** -->
 	<!-- DEFINE BODY -->
 	<!-- *********************************************** -->
 	<body style="background-color: #FFFFF0;">
 		
 		<!-- side tabs -->
-		<nav class="w3-sidenav w3-card-2 w3-light-grey" style="width:250px">
-			<div class="w3-blue-grey w3-padding-16" style="padding-left: 37px;">
-				<a href="#" class="w3-hover-blue-grey w3-xlarge" onclick="$('#home_hidden_form').submit(); return false;" >Amazon.com</a>
+		<nav class="w3-sidenav w3-card-2 w3-white" style="width:250px">
+
+			<!-- logo -->
+			<div class="w3-blue-grey" style="padding-left: 23px; padding-top: 40px; padding-bottom: 30px;">
+				<img id="logo_image" alt="logo">
 			</div>
 		  
-		  	<div id="display_user_name" class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 10px;"> User_Name </div>
-			<a href="#" onclick="$('#home_hidden_form').submit(); return false;">HOME</a>
-			<a href="#" class="w3-blue-grey">ACCOUNT</a>
-			<a href="#" onclick="$('#cart_hidden_form').submit(); return false;" >SHOPPING CART</a>
-			<a href="#" onclick="$('#orders_hidden_form').submit(); return false;">MY ORDERS</a>
-			<a href="#" onclick="$('#signout_hidden_form').submit(); return false;">SIGN OUT</a>
+		  	<!-- user name -->
+		  	<div id="display_user_name" class="w3-container"
+		  		style="padding-top: 20px; font-weight: bold; padding-bottom: 10px;">
+		  		User_Name
+		  	</div>
 
-			<div id="admin_rights">
-				<div class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 5px;"> Admin Controls </div>
-				<a href="#" onclick="$('#manage_books_hidden_form').submit(); return false;">Manage Inventory</a>
-				<a href="#" onclick="$('#manage_publishers_hidden_form').submit(); return false;">Manage Publishers</a>
-				<a href="#" onclick="$('#publisher_orders_hidden_form').submit(); return false;">Publisher Orders</a>
-				<a href="#" onclick="$('#user_accounts_hidden_form').submit(); return false;">User Accounts</a>
+		  	<!-- customer access -->
+			<a id="home_btn" href="#">Home</a>
+			<a id="account_btn" href="#" class="w3-blue-grey">Account</a>
+			<a id="cart_btn" href="#">Shopping Cart</a>
+			<a id="my_orders_btn" href="#">My Orders</a>
+			<a id="signout_btn" href="#">Sign Out</a>
+
+			<!-- admin controls -->
+			<div id="admin_controls">
+				<div class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 5px;">
+					Admin Controls
+				</div>
+				<a id="manage_inventory_btn" href="#">Manage Inventory</a>
+				<a id="manage_publishers_btn" href="#">Manage Publishers</a>
+				<a id="publisher_orders_btn" href="#">Publisher Orders</a>
+				<a id="user_accounts_btn" ref="#">User Accounts</a>
 			</div>
+
 		</nav>
 		
 		<!-- page content -->
@@ -63,7 +72,7 @@
 			</div>
 			
 			<!-- account info -->
-			<form id="form_container" style="display: table; margin: 0 auto;" action = "/Library/account/edit" method ="post">
+			<div style="display: table; margin: 0 auto;">
 			<div class="sh-form">
 
 				<!-- account info -->
@@ -73,7 +82,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required name ="userName" id="userName" />
+						<input type="text" class="w3-input w3-border sh-input" required id="user_name" />
 					</div>
 				</div>
 
@@ -84,7 +93,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="password" class="w3-input w3-border sh-input" required name = "password" id="password" />
+						<input type="password" class="w3-input w3-border sh-input" required id="user_password" />
 					</div>
 				</div>
 
@@ -95,7 +104,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required name = "firstName" id="firstName" />
+						<input type="text" class="w3-input w3-border sh-input" required id="first_name" />
 					</div>
 				</div>
 
@@ -106,7 +115,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required name = "lastName" id="lastName" />
+						<input type="text" class="w3-input w3-border sh-input" required id="last_name" />
 					</div>
 				</div>
 
@@ -117,7 +126,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required name = "email" id="email" />
+						<input type="text" class="w3-input w3-border sh-input" required id="user_email" />
 					</div>
 				</div>
 
@@ -128,7 +137,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required name = "phone" id="phone" />
+						<input type="text" class="w3-input w3-border sh-input" required id="user_phone" />
 					</div>
 				</div>
 
@@ -139,18 +148,19 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required name ="address" id="address" />
+						<input type="text" class="w3-input w3-border sh-input" required id="user_address" />
 					</div>
 				</div>
 
 				<div class="w3-container" style="margin-top:10px; margin-bottom: 10px; padding-right: 70px;" >
-					<button id="edit_data_btn" class="w3-btn w3-teal w3-right" style="width: 80px;" >Edit</button>
-					<button id="update_info_btn" class="w3-btn w3-red w3-right w3-margin-right" style="width: 80px;" >Update</button>
+					<button id="edit_info_btn" class="w3-btn w3-teal w3-right" style="width: 80px;" >Edit</button>
+					<button id="cancel_update_btn" class="w3-btn w3-green w3-right" style="width: 80px;" >Cancel</button>
+					<button id="confirm_update_btn" class="w3-btn w3-red w3-right w3-margin-right" style="width: 80px;" >Update</button>
 				</div>
 
 			</div>
 
-			</form>
+			</div>
 
 
 			
@@ -158,117 +168,150 @@
 
 
 
-
-		<!-- handling site navigation (hidden forms) -->
-		<form id="home_hidden_form" action="/Library/home" method="get" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-		<form id="cart_hidden_form" action="/Library/cart" method="get" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-		<form id="orders_hidden_form" action="/Library/orders" method="post" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-		<form id="signout_hidden_form" action="/Library/signin" method="get" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-
-		<form id="manage_books_hidden_form" action="/Library/manage_inventory" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-		<form id="manage_publishers_hidden_form" action="/Library/manage_publishers" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-		<form id="publisher_orders_hidden_form" action="/Library/publiser_orders" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-		<form id="user_accounts_hidden_form" action="/Library/manage_user_accounts" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-
-
 		
 	</body>
 	
-	<!-- *********************************************** -->
+
 	<!-- POST-LOADING SCRIPTS -->
 	<!-- *********************************************** -->
 	<script>
 
-		/* show/hide admin controls */
-		/******************************************/
-		var display_user_name = '<c:out value="${user_name}"/>' ;
-		var view_admin_rights = <c:out value="${admin_rights}"/> ;
+		/* hold book data from AJAX request */
+		var account_info;
 
-		if(view_admin_rights == false){
-			$("#admin_rights").remove();
-		}
+		$(document).ready(function(){
 
-		$("#display_user_name").text(display_user_name);
+			/* show/hide admin controls */
+			/******************************************/
+			var display_user_name;
+			var view_admin_controls;
+
+			if(view_admin_controls == false){
+				$("#admin_controls").remove();
+			}
+			$("#display_user_name").text(display_user_name);
 
 
-		document.getElementById("edit_data_btn").addEventListener("click", function(event){
-		    event.preventDefault();
-		    toggle_disabled();
+			/* no match error msg */
+			/******************************************/
+			//$("#no_match_msg").hide();
+
+			/* website logo */
+			/******************************************/
+			var src_url = "https://www.momdeals.com/vfiles/25-7b9c2f40aedba2587b86dad83e58312f.png";
+			$("#logo_image").attr("src", src_url);
+			$("#logo_image").attr("height", "60");
+			$("#logo_image").attr("width", "200");
+			$("#logo_image").css( 'cursor', 'pointer' );
+
+			/* view table rows */
+			/******************************************/
+			/* update rows AJAX */
+			var data_url = "http://127.0.0.1:8081/account/refresh_info";
+		    $.get(data_url, function(data, status){
+		    	
+		    	// obtain data
+		    	account_info = JSON.parse(data);
+		    	update_account_fields();
+		    });
+
+			/* form action listeners */
+			/******************************************/
+			$("#confirm_update_btn").hide();
+			$("#cancel_update_btn").hide();
+
+			$("#edit_info_btn").click(function(e){
+				$("#edit_info_btn").hide();
+				$("#confirm_update_btn").show();
+				$("#cancel_update_btn").show();
+			});
+
+			$("#cancel_update_btn").click(function(e){
+				$("#confirm_update_btn").hide();
+				$("#cancel_update_btn").hide();
+				$("#edit_info_btn").show();
+			});
+
+		    $('#confirm_update_btn').click(function(e){
+		    	$("#confirm_update_btn").hide();
+				$("#cancel_update_btn").hide();
+				$("#edit_info_btn").show();
+
+		    	var send_data = {
+		    		user_name : $("#user_name").val(),
+		    		user_password : $("#user_password").val(),
+		    		first_name : $("#first_name").val(),
+		    		last_name : $("#last_name").val(),
+		    		user_email : $("#user_email").val(),
+		    		user_phone : $("#user_phone").val(),
+		    		user_address : $("#user_address").val()
+		    	};
+
+		    	var target_url = "http://127.0.0.1:8081/account/update_info";
+
+				$.post(target_url, send_data, function(data, status){
+					// obtain data
+			    	//error_msg = JSON.parse(data);
+				});
+			});
+
+		    /* handle site navigation */
+			/******************************************/
+		    $("#logo_image").click(function(e){
+				var target_url = "http://127.0.0.1:8081/home";
+      			$( location ).attr("href", target_url);
+			});
+			$("#home_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/home";
+      			$( location ).attr("href", target_url);
+			});
+			$("#cart_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/cart";
+      			$( location ).attr("href", target_url);
+			});
+			$("#my_orders_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/my_orders";
+      			$( location ).attr("href", target_url);
+			});
+			$("#signout_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/";
+      			$( location ).attr("href", target_url);
+			});
+
+			$("#manage_inventory_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/manage_inventory";
+      			$( location ).attr("href", target_url);
+			});
+			$("#manage_publishers_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/manage_publishers";
+      			$( location ).attr("href", target_url);
+			});
+			$("#publisher_orders_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/publisher_orders";
+      			$( location ).attr("href", target_url);
+			});
+			$("#user_accounts_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/user_accounts";
+      			$( location ).attr("href", target_url);
+			});
+
 		});
-		
 
-		/* post-load script */
-		var disabled_flag = true;
-		var x = document.getElementsByClassName("sh-input");
-		var i;
-		for (i = 0; i < x.length; i++) {
-			x[i].disabled = true;
-		}	
 
-		document.getElementById('update_info_btn').style.display='none';
+		/*******************************
+		left outside for scoping purpose
+		********************************/
 
-		/* DOM manipulation functions */
-		function handle_side_nav(){
-			var x=document.getElementById("SideNav01");
-			if (x.className.indexOf("w3-show") == -1) {
-				x.className += " w3-show";
-			} else {
-				x.className = x.className.replace(" w3-show", "");
-			}
-		}
-
-		function toggle_disabled()
+		/* update account info fields */
+		/******************************************/
+		function update_account_fields()
 		{
-			if(disabled_flag == true){
-				disabled_flag = false;
-				document.getElementById("edit_data_btn").innerHTML = "Cancel";
-				document.getElementById('update_info_btn').style.display='block';
-			}
-			else{
-				disabled_flag = true;
-				document.getElementById("edit_data_btn").innerHTML = "Edit";
-				document.getElementById('update_info_btn').style.display='none';
-			}
-			
-			for (i = 0; i < x.length; i++) {
-			    x[i].disabled = disabled_flag;
-			}	
+			$("#user_email").val(account_info[0]["Email"]);
+			$("#first_name").val(account_info[0]["First_Name"]);
+			$("#last_name").val(account_info[0]["Last_Name"]);
+			$("#user_address").val(account_info[0]["Address"]);
+			$("#user_phone").val(account_info[0]["Phone"]);
 		}
-
-
-		document.getElementById("userName").value = "${signed_user.userName}";
-		document.getElementById("address").value = "${signed_user.address}";
-		document.getElementById("email").value = "${signed_user.email}";
-		document.getElementById("phone").value = "${signed_user.phone}";
-		document.getElementById("lastName").value = "${signed_user.lastName}";
-		document.getElementById("firstName").value = "${signed_user.firstName}";
-		document.getElementById("password").value = "${signed_user.password}";
-
-		
 
 	</script>
 	

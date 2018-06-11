@@ -290,6 +290,7 @@
 			$("#logo_image").attr("src", src_url);
 			$("#logo_image").attr("height", "60");
 			$("#logo_image").attr("width", "200");
+			$("#logo_image").css( 'cursor', 'pointer' );
 		
 			/* hide modal events */
 			/******************************************/
@@ -338,13 +339,9 @@
 				});
 			});
 
-		    /* add btn event listeners */
+		    /* handle site navigation */
 			/******************************************/
-		    $("#logo_btn").click(function(e){
-				var target_url = "http://127.0.0.1:8081/home";
-      			$( location ).attr("href", target_url);
-			});
-			$("#home_btn").click(function(e){
+		    $("#logo_image").click(function(e){
 				var target_url = "http://127.0.0.1:8081/home";
       			$( location ).attr("href", target_url);
 			});
