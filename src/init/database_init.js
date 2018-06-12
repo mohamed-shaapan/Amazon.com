@@ -12,7 +12,7 @@ exports.initialize = function()
 		host     : 'localhost',
 		user     : 'root',
 		password : '0103808083Mo',
-		database : 'Bookstore'
+		database : 'bookstore'
 	});
 
 	connection.connect();

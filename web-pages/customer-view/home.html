@@ -415,7 +415,7 @@
 	    		var title = tmp_book["Title"];
 	    		var price = tmp_book["Price"];
 
-	    		var view_btn = "<button onclick='show_view_book_modal("+i+")'>view</button>";
+	    		var view_btn = "<button class='w3-right' onclick='show_view_book_modal("+i+")'>view</button>";
 	    		var new_row = "<tr class='table_data'><td>"+title+"</td><td>"+price+"</td><td>"+view_btn+"</td></tr>";
 
 	    		$("#book_table > tbody").append(new_row);
