@@ -3,6 +3,12 @@ Use bookstore;
 DELETE FROM book_info;
 DELETE FROM book_category;
 DELETE FROM publishing_house;
+DELETE FROM book_info;
+DELETE FROM inventory;
+DELETE FROM author_info;
+DELETE FROM book_author;
+DELETE FROM user_account;
+DELETE FROM publisher_order;
 
 # book categories
 INSERT INTO book_category (id, category_name) VALUES (1, "Science");
@@ -42,3 +48,32 @@ INSERT INTO inventory (isbn, quantity, threshold, price) VALUES (789123456, 200,
 INSERT INTO inventory (isbn, quantity, threshold, price) VALUES (123789456, 50, 20, 4.99);
 INSERT INTO inventory (isbn, quantity, threshold, price) VALUES (456123789, 120, 20, 9.99);
 
+# author info
+INSERT INTO author_info (id, name) VALUES (1, "F. Scott Fitzgerald");
+INSERT INTO author_info (id, name) VALUES (2, "Lewis Carroll");
+INSERT INTO author_info (id, name) VALUES (3, "Jane Austen");
+INSERT INTO author_info (id, name) VALUES (4, "Arthur Conan Doyle");
+INSERT INTO author_info (id, name) VALUES (5, "Nathaniel Hawthorne");
+
+# book authors
+INSERT INTO book_author (isbn, author_id) VALUES (123456789, 2);
+INSERT INTO book_author (isbn, author_id) VALUES (456789123, 4);
+INSERT INTO book_author (isbn, author_id) VALUES (789123456, 1);
+INSERT INTO book_author (isbn, author_id) VALUES (123789456, 3);
+INSERT INTO book_author (isbn, author_id) VALUES (456123789, 5);
+INSERT INTO book_author (isbn, author_id) VALUES (456123789, 1);
+INSERT INTO book_author (isbn, author_id) VALUES (456123789, 2);
+
+# user accounts
+INSERT INTO user_account (id, email, login_password, user_name, credentials, first_name, last_name, address, phone)
+VALUES (1, "mohamed.shaapan.1@gmail.com", "123456789", "mshaban", 1, "mohamed", "shaban", "alexandria, egypt", "01129168505");
+INSERT INTO user_account (id, email, login_password, user_name, credentials, first_name, last_name, address, phone)
+VALUES (2, "robin_williams@gmail.com", "987654321", "Robin", 0, "Robin", "Williams", "california, usa", "01204498368");
+INSERT INTO user_account (id, email, login_password, user_name, credentials, first_name, last_name, address, phone)
+VALUES (3, "chris_evans", "112233445566778899", "Evans", 0, "Chris", "Evans", "Brooklyn, NY", "01552720353");
+
+# publisher orders
+INSERT INTO publisher_order (order_id, isbn, publisher_id, quantity)
+VALUES (1, 123456789, 3, 300);
+INSERT INTO publisher_order (order_id, isbn, publisher_id, quantity)
+VALUES (2, 456789123, 2, 300);

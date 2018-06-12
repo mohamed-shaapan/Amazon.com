@@ -21,12 +21,16 @@ exports.handle_routes = function(server, database, directory_table)
 
 	// refresh home page
 	server.get('/home/refresh_table', function (req, res) {
-		// Prepare output in JSON format
-		var sql_query = "SELECT * FROM Book;";
+
+		// prepare SQL query
+		var sql_query = "SELECT I.isbn AS isbn, B.title AS title, C.category_name as category_name, B.year AS year, P.name AS publisher_name, I.price AS price "+ 
+						"FROM ((((inventory AS I) JOIN (book_info AS B) ON (I.isbn = B.isbn)) "+
+						"JOIN (publishing_house AS P) ON (B.publisher_id = P.id)) "+
+						"JOIN (book_category AS C) ON (B.category_id = C.id)) ;";
+
 		database.query(sql_query, function (err, rows, fields) {
 			// handle errors
 			if (err) throw err;
-			//console.log('Book Title: ', rows[0].Title);
 			// return data
 			res.end(JSON.stringify(rows));
 		});
@@ -35,15 +39,28 @@ exports.handle_routes = function(server, database, directory_table)
 
 	/* search books */
 	server.post('/home/search', urlencodedParser, function (req, res) {
-		console.log("success---------------------------------------------");
 
-		// prepare sql statement
+		// extract data
 		var term = req.body.search_term;
 		var criteria = req.body.search_criteria;
+		switch (criteria) {
+			case "title":
+				criteria = "B.title";
+				break; 
+			case "author":
+				criteria = "B.title"; // authors not handled yet
+				break; 
+			case "publisher":
+				criteria = "P.name";
+				break; 
+		}
 
-		var sql_query = "SELECT * FROM Book WHERE "+criteria+" LIKE \"%"+term+"%\" ;";
-
-		console.log(sql_query);
+		// prepare SQL query
+		var sql_query = "SELECT I.isbn AS isbn, B.title AS title, C.category_name as category_name, B.year AS year, P.name AS publisher_name, I.price AS price "+  
+						"FROM ((((inventory AS I) JOIN (book_info AS B) ON (I.isbn = B.isbn)) "+
+						"JOIN (publishing_house AS P) ON (B.publisher_id = P.id)) "+
+						"JOIN (book_category AS C) ON (B.category_id = C.id)) "+
+						"WHERE "+criteria+" LIKE \"%"+term+"%\" ;";
 
 		database.query(sql_query, function (err, rows, fields) {
 			// handle errors
@@ -58,9 +75,8 @@ exports.handle_routes = function(server, database, directory_table)
 
 	/* add to cart */
 	server.post('/home/add_to_cart', urlencodedParser, function (req, res) {
-		console.log("success---------------------------------------------");
 
-		// prepare sql statement
+		// extract data
 		var user_email = "\"tmp@tmp.com\"";
 		var book_isbn = req.body.book_isbn;
 		var total_price = "123";

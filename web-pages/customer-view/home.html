@@ -133,9 +133,9 @@
 
 					<div class="w3-col" style="width: 200px; height: 40px;">
 						<select id="search_criteria" class="w3-select w3-border w3-small" required >
-							<option value="Title" selected >Title</option>
-							<option value="Author">Author</option>
-							<option value="Publisher">Publisher</option>
+							<option value="title" selected >Title</option>
+							<option value="author">Author</option>
+							<option value="publisher">Publisher</option>
 						</select>
 					</div>
 
@@ -390,13 +390,13 @@
 		/******************************************/
 		function show_view_book_modal(book_index)
 		{
-			$("#book_isbn").val(book_list[book_index]["ISBN"]);
-			$("#book_title").val(book_list[book_index]["Title"]);
-			$("#book_author").val(book_list[book_index]["Author"]);
-			$("#book_publisher").val(book_list[book_index]["Publisher"]);
-			$("#book_category").val(book_list[book_index]["Category"]);
-			$("#book_price").val(book_list[book_index]["Price"]);
-			$("#book_year").val(book_list[book_index]["Publication_Year"]);
+			$("#book_isbn").val(book_list[book_index]["isbn"]);
+			$("#book_title").val(book_list[book_index]["title"]);
+			$("#book_author").val(book_list[book_index]["author"]);
+			$("#book_publisher").val(book_list[book_index]["name"]);
+			$("#book_category").val(book_list[book_index]["category_name"]);
+			$("#book_price").val(book_list[book_index]["price"]);
+			$("#book_year").val(book_list[book_index]["year"]);
 
 			$('#view_book_modal').show();
 		}
@@ -412,8 +412,8 @@
 	    	for(i=0; i<book_list.length; i++)
 	    	{
 	    		var tmp_book = book_list[i];
-	    		var title = tmp_book["Title"];
-	    		var price = tmp_book["Price"];
+	    		var title = tmp_book["title"];
+	    		var price = tmp_book["price"];
 
 	    		var view_btn = "<button class='w3-right' onclick='show_view_book_modal("+i+")'>view</button>";
 	    		var new_row = "<tr class='table_data'><td>"+title+"</td><td>"+price+"</td><td>"+view_btn+"</td></tr>";
