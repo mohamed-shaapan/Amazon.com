@@ -77,11 +77,11 @@ exports.handle_routes = function(server, database, directory_table)
 	server.post('/home/add_to_cart', urlencodedParser, function (req, res) {
 
 		// extract data
-		var user_email = "\"tmp@tmp.com\"";
+		var user_id = 1;
 		var book_isbn = req.body.book_isbn;
-		var total_price = "123";
 
-		var sql_query = "INSERT INTO Customer_Cart VALUES ("+user_email+", "+book_isbn+", "+total_price+");";
+		var sql_query = "INSERT INTO customer_cart "+
+						"VALUES ("+user_id+", "+book_isbn+", "+user_id+") ;";
 
 		console.log(sql_query);
 

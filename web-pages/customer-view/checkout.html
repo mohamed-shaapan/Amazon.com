@@ -163,10 +163,10 @@
 		    	// obtain data from server
 		    	var purchase_info = JSON.parse(data);
 		    	// set fields
-			    $("#full_name").val(purchase_info["user_name"]);
-				$("#phone").val(purchase_info["phone"]);
-				$("#address").val(purchase_info["address"]);
-				$("#total_price").val(purchase_info["total_price"]);
+			    $("#full_name").val(purchase_info[0]["first_name"]+" "+purchase_info[0]["last_name"]);
+				$("#phone").val(purchase_info[0]["phone"]);
+				$("#address").val(purchase_info[0]["address"]);
+				$("#total_price").val(purchase_info[0]["total_price"]);
 		    });
 
 			/* cancel order button */

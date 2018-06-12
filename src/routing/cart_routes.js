@@ -21,10 +21,13 @@ exports.handle_routes = function(server, database, directory_table)
 
 	// refresh cart table
 	server.get('/cart/refresh_table', function (req, res) {
-		// Prepare output in JSON format
-		var sql_query = "SELECT B.ISBN, B.Title, B.Price \
-						FROM (Customer_Cart AS C) JOIN (Book AS B) ON (C.ISBN=B.ISBN) \
-						WHERE Email='tmp@tmp.com' ;";
+
+		var user_id = 1;
+		// prepare SQL query
+		var sql_query = "SELECT I.isbn AS isbn, B.title AS title, I.price AS price, C.quantity AS quantity "+
+						"FROM (((SELECT * FROM customer_cart WHERE user_id="+user_id+") AS C) "+
+							"JOIN (inventory AS I) ON (I.isbn = C.isbn)) "+
+							"JOIN (book_info AS B) ON (I.isbn = B.isbn); ";
 		
 		database.query(sql_query, function (err, rows, fields) {
 			// handle errors
@@ -40,29 +43,28 @@ exports.handle_routes = function(server, database, directory_table)
 	/* remove book */
 	server.post('/cart/remove_book', urlencodedParser, function (req, res) {
 
+		var user_id = 1;
 		// prepare sql statement
 		var selected_isbn = req.body.book_isbn;
-		console.log("\nsuccess\n", selected_isbn);
-
-		var sql_query = "DELETE FROM Customer_Cart \
-						WHERE (Email='tmp@tmp.com') AND (ISBN="+selected_isbn+") ;";
+		var sql_query = "DELETE FROM customer_cart "+
+						"WHERE (user_id="+user_id+") AND (isbn="+selected_isbn+") ;";
 
 		database.query(sql_query, function (err, rows, fields) {
 			// handle errors
 			if (err) throw err;
-		});
-
-		// refresh table again
-		var sql_query2 = "SELECT B.ISBN, B.Title, B.Price \
-						FROM (Customer_Cart AS C) JOIN (Book AS B) ON (C.ISBN=B.ISBN) \
-						WHERE Email='tmp@tmp.com' ;";
+			// refresh table
+			var sql_query2 = "SELECT I.isbn AS isbn, B.title AS title, I.price AS price, C.quantity AS quantity "+
+							"FROM (((SELECT * FROM customer_cart WHERE user_id="+user_id+") AS C) "+
+							"JOIN (inventory AS I) ON (I.isbn = C.isbn)) "+
+							"JOIN (book_info AS B) ON (I.isbn = B.isbn); ";
 		
-		database.query(sql_query2, function (err, rows, fields) {
-			// handle errors
-			if (err) throw err;
-			//console.log('Book Title: ', rows[0].Title);
-			// return data
-			res.end(JSON.stringify(rows));
+			database.query(sql_query2, function (err, rows, fields) {
+				// handle errors
+				if (err) throw err;
+				// return data
+				res.end(JSON.stringify(rows));
+			});
+
 		});
 
 	});
@@ -71,6 +73,8 @@ exports.handle_routes = function(server, database, directory_table)
 	/* cart checkout */
 	server.post('/cart/checkout', urlencodedParser, function (req, res) {
 
+		var user_id = 1;
+		
 		for (var key in req.body)
 		{
 			// extract data
@@ -78,14 +82,14 @@ exports.handle_routes = function(server, database, directory_table)
 			var quantity = req.body[key];
 
 			// update database
-			/*var sql_query = "UPDATE Customer_Cart \
-						SET (Quantity="+quantity+") \
-						WHERE (ISBN="+isbn+") AND (Email='tmp@tmp.com') ;";
+			var sql_query = "UPDATE customer_cart "+
+							"SET quantity="+quantity+" "+
+							"WHERE (isbn="+isbn+") AND (user_id="+user_id+") ;";
 
 			database.query(sql_query, function (err, rows, fields) {
 				// handle errors
 				if (err) throw err;
-			});*/
+			});
 		}
 
 		// redirect to checkout page

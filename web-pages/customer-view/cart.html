@@ -70,7 +70,6 @@
 			  	<!-- header -->
 			    <thead>
 			      <tr class="w3-dark-grey">
-			        <th>ISBN</th>
 			        <th>Title</th>
 			        <th>Unit Price</th>
 			        <th>Qnt</th>
@@ -207,14 +206,14 @@
 	    	for(i=0; i<cart_list.length; i++)
 	    	{
 	    		var tmp_book = cart_list[i];
-	    		var isbn = tmp_book["ISBN"];
-	    		var title = tmp_book["Title"];
-	    		var unit_price = tmp_book["Price"];
+	    		var isbn = tmp_book["isbn"];
+	    		var title = tmp_book["title"];
+	    		var unit_price = tmp_book["price"];
+	    		var quantity = tmp_book["quantity"];
 
 	    		var remove_btn = "<button class='remove_book_btn w3-right' onmouseover='select_isbn("+isbn+")'>-del</button>";
-	    		var qnt_field = "<input type='number' style='width:50px;' value='1' name=\""+isbn+"\" />";
+	    		var qnt_field = "<input type='number' style='width:50px;' value=\""+quantity+"\" name=\""+isbn+"\" />";
 	    		var new_row = "<tr class='table_data'> \
-		    						<td>"+isbn+"</td> \
 		    						<td>"+title+"</td> \
 		    						<td>"+unit_price+"</td> \
 		    						<td>"+qnt_field+"</td> \

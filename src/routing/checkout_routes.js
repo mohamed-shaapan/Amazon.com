@@ -14,10 +14,12 @@ exports.handle_routes = function(server, database, directory_table)
 
 	// refresh cart table
 	server.get('/checkout/refresh_info', function (req, res) {
+
+		var user_id = 1;
 		// Prepare output in JSON format
-		var sql_query = "SELECT B.ISBN, B.Title, B.Price \
-						FROM (Customer_Cart AS C) JOIN (Book AS B) ON (C.ISBN=B.ISBN) \
-						WHERE Email='tmp@tmp.com' ;";
+		var sql_query = "SELECT first_name, last_name, phone, address "+
+						"FROM user_account "+
+						"WHERE id="+user_id+" ;";
 		
 		database.query(sql_query, function (err, rows, fields) {
 			// handle errors
@@ -38,32 +40,41 @@ exports.handle_routes = function(server, database, directory_table)
 		var expiration_date = req.body.expiration_date;
 
 		// retrieve items in cart
-		var cart_items_query = "SELECT B.ISBN, B.Title, B.Price \
-								FROM (Customer_Cart AS C) JOIN (Book AS B) ON (C.ISBN=B.ISBN) \
-								WHERE Email='tmp@tmp.com' ;";
+		var user_id = 1;
+		// prepare SQL query
+		var cart_items_query ="SELECT * "+
+							"FROM customer_cart "+
+							"WHERE user_id="+user_id+"; ";
 
 		database.query(cart_items_query, function (err, rows, fields) {
 			// handle errors
 			if (err) throw err;
 			// update info
-			console.log("\n--------------------------------------------------\n");
 			var i;
 			for(i=0; i<rows.length; i++)
 			{
 				var row = rows[i];
-				var isbn = row["ISBN"];
-				var user_email = "tmp@tmp.com";
-				var date = "6-12-2018 02-58";
+
+				var isbn = row["isbn"];
+				var quantity = row["quantity"];
 
 				// update purchases table
-				var insert_query = "INSERT INTO Customer_Purchases \
-								VALUES (Email='tmp@tmp.com') AND (ISBN=) ;";
+				var insert_query = "INSERT INTO customer_order (user_id, isbn, quantity) "+
+								"VALUES ("+user_id+", "+isbn+", "+quantity+") ;";
 
-				/*database.query(sql_query, function (err, rows, fields) {
+				database.query(insert_query, function (err, rows, fields) {
 					// handle errors
 					if (err) throw err;
-				});*/
+				});
 			}
+
+			// remove item from cart
+			var remove_query = "DELETE FROM customer_cart "+
+								"WHERE (user_id="+user_id+") ;";
+			database.query(remove_query, function (err, rows, fields) {
+					// handle errors
+					if (err) throw err;
+			});
 
 			/* redirect to home page */
 			var page_path = path.join(__dirname + directory_table["home"]);

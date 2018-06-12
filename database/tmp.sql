@@ -1,3 +1,4 @@
 USE bookstore;
 
-SELECT * FROM user_account;
+SELECT *
+FROM customer_cart;
