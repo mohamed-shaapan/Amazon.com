@@ -5,6 +5,7 @@ var signup_routes = require('./signup_routes');
 var home_routes = require('./home_routes');
 var account_routes = require('./account_routes');
 var cart_routes = require('./cart_routes');
+var checkout_routes = require('./checkout_routes');
 
 var directory_table = {
 	signin : "/../../web-pages/signin.html",
@@ -26,6 +27,7 @@ exports.start_listening = function(server, database)
 	home_routes.handle_routes(server, database, directory_table);
 	account_routes.handle_routes(server, database, directory_table);
 	cart_routes.handle_routes(server, database, directory_table);
+	checkout_routes.handle_routes(server, database, directory_table);
 }
 
 
