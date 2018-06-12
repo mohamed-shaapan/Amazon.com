@@ -196,6 +196,10 @@
 			/******************************************/
 			//$("#no_match_msg").hide();
 
+			/* disable input fields */
+			/******************************************/
+			$(".sh-input").attr('disabled', true);
+
 			/* website logo */
 			/******************************************/
 			var src_url = "https://www.momdeals.com/vfiles/25-7b9c2f40aedba2587b86dad83e58312f.png";
@@ -224,12 +228,14 @@
 				$("#edit_info_btn").hide();
 				$("#confirm_update_btn").show();
 				$("#cancel_update_btn").show();
+				$(".sh-input").attr('disabled', false);
 			});
 
 			$("#cancel_update_btn").click(function(e){
 				$("#confirm_update_btn").hide();
 				$("#cancel_update_btn").hide();
 				$("#edit_info_btn").show();
+				$(".sh-input").attr('disabled', true);
 			});
 
 		    $('#confirm_update_btn').click(function(e){
@@ -253,6 +259,8 @@
 					// obtain data
 			    	//error_msg = JSON.parse(data);
 				});
+
+				$(".sh-input").attr('disabled', true);
 			});
 
 		    /* handle site navigation */
@@ -306,11 +314,13 @@
 		/******************************************/
 		function update_account_fields()
 		{
-			$("#user_email").val(account_info[0]["Email"]);
-			$("#first_name").val(account_info[0]["First_Name"]);
-			$("#last_name").val(account_info[0]["Last_Name"]);
-			$("#user_address").val(account_info[0]["Address"]);
-			$("#user_phone").val(account_info[0]["Phone"]);
+			$("#user_name").val(account_info[0]["user_name"]);
+			$("#user_password").val(account_info[0]["password"]);
+			$("#first_name").val(account_info[0]["first_name"]);
+			$("#last_name").val(account_info[0]["last_name"]);
+			$("#user_email").val(account_info[0]["email"]);
+			$("#user_phone").val(account_info[0]["phone"]);
+			$("#user_address").val(account_info[0]["address"]);
 		}
 
 	</script>

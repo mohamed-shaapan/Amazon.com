@@ -22,8 +22,11 @@ exports.handle_routes = function(server, database, directory_table)
 	// refresh huser account info
 	server.get('/account/refresh_info', function (req, res) {
 
+		var user_id = 1;
 		// get data from user SESSION
-		var sql_query = "SELECT * FROM Customer WHERE Email='tmp@tmp.com' ;";
+		var sql_query = "SELECT email, login_password AS password, user_name, first_name, last_name, address, phone "+
+						"FROM user_account WHERE id="+user_id+" ;";
+
 		database.query(sql_query, function (err, rows, fields) {
 			// handle errors
 			if (err) throw err;
@@ -36,6 +39,7 @@ exports.handle_routes = function(server, database, directory_table)
 	/* search books */
 	server.post('/account/update_info', urlencodedParser, function (req, res) {
 
+		var user_id = 1;
 		// prepare sql statement
 		var user_name = req.body.user_name;
 		var user_password = req.body.user_password;
@@ -45,15 +49,13 @@ exports.handle_routes = function(server, database, directory_table)
 		var user_phone = req.body.user_phone;
 		var user_address = req.body.user_address;
 
-		var sql_query = "UPDATE Customer \
-							SET Email=\""+user_email+"\" \
-							, First_Name=\""+first_name+"\" \
-							, Last_Name=\""+last_name+"\" \
-							, Address=\""+user_address+"\" \
-							, Phone=\""+user_phone+"\" \
-							 "+" WHERE Email=\""+user_email+"\";";
+		var sql_query = "UPDATE user_account "+
+						"SET email='"+user_email+"', login_password='"+user_password+"', user_name='"+user_name+"' "+
+							", first_name='"+first_name+"', last_name='"+last_name+"' "+
+							", address='"+user_address+"', phone='"+user_phone+"' "+
+						"WHERE id="+user_id+" ;";
 
-		console.log(sql_query);
+		//console.log(sql_query);
 
 		database.query(sql_query, function (err, rows, fields) {
 			// handle errors
