@@ -60,13 +60,13 @@
 			</div>
 
 			<div class="w3-container" style="margin-top: 10px;">
-			  <table class="w3-table-all w3-hoverable">
+			  <table id="order_table" class="w3-table-all w3-hoverable">
 			  	<!-- header -->
 			    <thead>
 			      <tr class="w3-dark-grey">
-			        <th>ISBN</th>
 			        <th>Title</th>
 			        <th>Quantity</th>
+			        <th>Unit Price</th>
 			        <th>Date</th>
 			      </tr>
 			    </thead>
@@ -182,20 +182,20 @@
 			var i;
 	    	for(i=0; i<order_list.length; i++)
 	    	{
-	    		var tmp_book = order_list[i];
-	    		var isbn = tmp_book["ISBN"];
-	    		var title = tmp_book["Title"];
-	    		var quantity = tmp_book["Quantity"];
-	    		var date = tmp_book["Date"];
+	    		var tmp_order = order_list[i];
+	    		var title = tmp_order["title"];
+	    		var quantity = tmp_order["quantity"];
+	    		var price = tmp_order["price"];
+	    		var date = tmp_order["date"];
 
 	    		var new_row = "<tr> \
-	    							<td>"+isbn+"</td> \
 	    							<td>"+title+"</td> \
 	    							<td>"+quantity+"</td> \
+	    							<td>"+price+"</td> \
 	    							<td>"+date+"</td> \
 	    						</tr>";
 
-	    		$("#book_table > tbody").append(new_row);
+	    		$("#order_table > tbody").append(new_row);
 	    	}
 		}
 
