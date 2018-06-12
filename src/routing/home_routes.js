@@ -57,7 +57,7 @@ exports.handle_routes = function(server, database, directory_table)
 
 
 	/* add to cart */
-	server.post('/home/cart', urlencodedParser, function (req, res) {
+	server.post('/home/add_to_cart', urlencodedParser, function (req, res) {
 		console.log("success---------------------------------------------");
 
 		// prepare sql statement

@@ -1,9 +1,7 @@
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
 	
-	<!-- *********************************************** -->
+
 	<!-- DEFINE HEADER -->
 	<!-- *********************************************** -->
 	<head>
@@ -13,32 +11,44 @@
 	</head>
 	
 
-	<!-- *********************************************** -->
+
 	<!-- DEFINE BODY -->
 	<!-- *********************************************** -->
-	<body style="background-color: #FFFFF0;">
+	<body class="w3-light-grey">
 
 		
 		<!-- side tabs -->
-		<nav class="w3-sidenav w3-card-2 w3-light-grey" style="width:250px">
-			<div class="w3-blue-grey w3-padding-16" style="padding-left: 37px;">
-				<a href="#" class="w3-hover-blue-grey w3-xlarge" onclick="$('#home_hidden_form').submit(); return false;" >Amazon.com</a>
+		<nav class="w3-sidenav w3-card-2 w3-white" style="width:250px">
+
+			<!-- logo -->
+			<div class="w3-blue-grey" style="padding-left: 23px; padding-top: 40px; padding-bottom: 30px;">
+				<img id="logo_image" alt="logo">
 			</div>
 		  
-		  	<div id="display_user_name" class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 10px;"> User_Name </div>
-			<a href="#" onclick="$('#home_hidden_form').submit(); return false;" >HOME</a>
-			<a href="#" onclick="$('#account_hidden_form').submit(); return false;" >ACCOUNT</a>
-			<a href="#" onclick="$('#cart_hidden_form').submit(); return false;" >SHOPPING CART</a>
-			<a href="#" class="w3-blue-grey">MY ORDERS</a>
-			<a href="#" onclick="$('#signout_hidden_form').submit(); return false;">SIGN OUT</a>
+		  	<!-- user name -->
+		  	<div id="display_user_name" class="w3-container"
+		  		style="padding-top: 20px; font-weight: bold; padding-bottom: 10px;">
+		  		User_Name
+		  	</div>
 
-			<div id="admin_rights">
-				<div class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 5px;"> Admin Controls </div>
-				<a href="#" onclick="$('#manage_books_hidden_form').submit(); return false;">Manage Inventory</a>
-				<a href="#" onclick="$('#manage_publishers_hidden_form').submit(); return false;">Manage Publishers</a>
-				<a href="#" onclick="$('#publisher_orders_hidden_form').submit(); return false;">Publisher Orders</a>
-				<a href="#" onclick="$('#user_accounts_hidden_form').submit(); return false;">User Accounts</a>
+		  	<!-- customer access -->
+			<a id="home_btn" href="#">Home</a>
+			<a id="account_btn" href="#">Account</a>
+			<a id="cart_btn" href="#">Shopping Cart</a>
+			<a id="my_orders_btn" href="#" class="w3-blue-grey">My Orders</a>
+			<a id="signout_btn" href="#">Sign Out</a>
+
+			<!-- admin controls -->
+			<div id="admin_controls">
+				<div class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 5px;">
+					Admin Controls
+				</div>
+				<a id="manage_inventory_btn" href="#">Manage Inventory</a>
+				<a id="manage_publishers_btn" href="#">Manage Publishers</a>
+				<a id="publisher_orders_btn" href="#">Publisher Orders</a>
+				<a id="user_accounts_btn" ref="#">User Accounts</a>
 			</div>
+
 		</nav>
 		
 		<!-- page content -->
@@ -61,85 +71,132 @@
 			      </tr>
 			    </thead>
 			    <!-- create rows -->
-			    <c:forEach items = "${orders}" var = "order" varStatus = "status">
-			    	<tr>
-			    	 <td>"${order.isbn}"</td>
-			    	 <td></td>
-					 <td>"${order.quantity}"</td>
-					 <td>"${order.date}"</td>
-				    </tr>	
-			    </c:forEach>
-			    
+			    <tbody>
+			    </tbody>
 			    
 			  </table>
+			</div>
+
+			<div id="empty_orders_msg" class="w3-container w3-xlarge w3-white w3-center" style="margin:16px;">
+				Nothing Found
 			</div>
 
 			
 		</div>
 
 
-		<!-- handling site navigation (hidden forms) -->
-		<form id="home_hidden_form" action="/Library/home" method="get" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
 
-		<form id="account_hidden_form" action="/Library/account" method="post" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-		<form id="cart_hidden_form" action="/Library/cart" method="get" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-		<form id="signout_hidden_form" action="/Library/signin" method="get" style="display: none">
-		  <input type="hidden" name="myParameterName" value="myParameterValue">
-		</form>
-
-
-		<form id="manage_books_hidden_form" action="/Library/manage_inventory" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-		<form id="manage_publishers_hidden_form" action="/Library/manage_publishers" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-		<form id="publisher_orders_hidden_form" action="/Library/publiser_orders" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-		<form id="user_accounts_hidden_form" action="/Library/manage_user_accounts" method="get" style="display: none">
-		  <input type="hidden" name="x" value="">
-		</form>
-
-
-
-		
 	</body>
 	
-	<!-- *********************************************** -->
+
+
 	<!-- POST-LOADING SCRIPTS -->
 	<!-- *********************************************** -->
 	<script>
 
-		/* show/hide admin controls */
-		/******************************************/
-		var display_user_name = '<c:out value="${user_name}"/>' ;
-		var view_admin_rights = <c:out value="${admin_rights}"/> ;
+		/* hold book data from AJAX request */
+		var order_list = [];
 
-		if(view_admin_rights == false){
-			$("#admin_rights").remove();
-		}
+		$(document).ready(function(){
 
-		$("#display_user_name").text(display_user_name);
+			/* show/hide admin controls */
+			/******************************************/
+			var display_user_name;
+			var view_admin_controls;
 
-		function handle_side_nav(){
-			var x=document.getElementById("SideNav01");
-			if (x.className.indexOf("w3-show") == -1) {
-				x.className += " w3-show";
-			} else {
-				x.className = x.className.replace(" w3-show", "");
+			if(view_admin_controls == false){
+				$("#admin_controls").remove();
 			}
+			$("#display_user_name").text(display_user_name);
+
+			/* website logo */
+			/******************************************/
+			var src_url = "https://www.momdeals.com/vfiles/25-7b9c2f40aedba2587b86dad83e58312f.png";
+			$("#logo_image").attr("src", src_url);
+			$("#logo_image").attr("height", "60");
+			$("#logo_image").attr("width", "200");
+			$("#logo_image").css( 'cursor', 'pointer' );
+
+			/* view table rows */
+			/******************************************/
+			/* update rows AJAX */
+			var data_url = "http://127.0.0.1:8081/my_orders/refresh_table";
+		    $.get(data_url, function(data, status){
+		    	
+		    	// obtain data
+		    	order_list = JSON.parse(data);
+		    	update_orders_view();
+		    });
+
+		    /* handle site navigation */
+			/******************************************/
+		    $("#logo_image").click(function(e){
+				var target_url = "http://127.0.0.1:8081/home";
+      			$( location ).attr("href", target_url);
+			});
+			$("#home_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/home";
+      			$( location ).attr("href", target_url);
+			});
+			$("#account_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/account";
+      			$( location ).attr("href", target_url);
+			});
+			$("#cart_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/cart";
+      			$( location ).attr("href", target_url);
+			});
+			$("#signout_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/";
+      			$( location ).attr("href", target_url);
+			});
+
+			$("#manage_inventory_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/manage_inventory";
+      			$( location ).attr("href", target_url);
+			});
+			$("#manage_publishers_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/manage_publishers";
+      			$( location ).attr("href", target_url);
+			});
+			$("#publisher_orders_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/publisher_orders";
+      			$( location ).attr("href", target_url);
+			});
+			$("#user_accounts_btn").click(function(e){
+				var target_url = "http://127.0.0.1:8081/user_accounts";
+      			$( location ).attr("href", target_url);
+			});
+
+		});
+
+
+		/*******************************
+		left outside for scoping purpose
+		********************************/
+		function update_orders_view()
+		{
+			if(order_list.length != 0){
+				$("#empty_orders_msg").hide();
+			}
+			var i;
+	    	for(i=0; i<order_list.length; i++)
+	    	{
+	    		var tmp_book = order_list[i];
+	    		var isbn = tmp_book["ISBN"];
+	    		var title = tmp_book["Title"];
+	    		var quantity = tmp_book["Quantity"];
+	    		var date = tmp_book["Date"];
+
+	    		var new_row = "<tr> \
+	    							<td>"+isbn+"</td> \
+	    							<td>"+title+"</td> \
+	    							<td>"+quantity+"</td> \
+	    							<td>"+date+"</td> \
+	    						</tr>";
+
+	    		$("#book_table > tbody").append(new_row);
+	    	}
 		}
 
 	</script>
