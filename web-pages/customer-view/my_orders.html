@@ -39,7 +39,7 @@
 			<a id="signout_btn" href="#">Sign Out</a>
 
 			<!-- admin controls -->
-			<div id="admin_controls">
+			<div id="admin_controls" style='display: none;'>
 				<div class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 5px;">
 					Admin Controls
 				</div>
@@ -99,16 +99,6 @@
 
 		$(document).ready(function(){
 
-			/* show/hide admin controls */
-			/******************************************/
-			var display_user_name;
-			var view_admin_controls;
-
-			if(view_admin_controls == false){
-				$("#admin_controls").remove();
-			}
-			$("#display_user_name").text(display_user_name);
-
 			/* website logo */
 			/******************************************/
 			var src_url = "https://www.momdeals.com/vfiles/25-7b9c2f40aedba2587b86dad83e58312f.png";
@@ -126,6 +116,23 @@
 		    	// obtain data
 		    	order_list = JSON.parse(data);
 		    	update_orders_view();
+		    });
+
+		    /* personalized views */
+			/******************************************/
+			/* update rows AJAX */
+			var data_url2 = "http://127.0.0.1:8081/home/update_views";
+		    $.get(data_url2, function(data, status){
+		    	
+		    	// obtain data
+		    	var personal_views = JSON.parse(data);
+		    	$("#display_user_name").text(personal_views['user_name']);
+		    	if(personal_views['credentials'] == 0){
+		    		$("#admin_controls").remove();
+		    	}else{
+		    		$("#admin_controls").show();
+		    	}
+
 		    });
 
 		    /* handle site navigation */
@@ -147,7 +154,7 @@
       			$( location ).attr("href", target_url);
 			});
 			$("#signout_btn").click(function(e){
-				var target_url = "http://127.0.0.1:8081/";
+				var target_url = "http://127.0.0.1:8081/signout";
       			$( location ).attr("href", target_url);
 			});
 

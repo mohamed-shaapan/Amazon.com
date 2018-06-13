@@ -8,12 +8,24 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 /* INTERFACE FUNCTIONS */
 /*********************************************/
-exports.handle_routes = function(server, database, directory_table)
+exports.handle_routes = function(server, database, directory_table, session)
 {
 
 	// cart window
 	server.get('/cart', function (req, res) {
+
+		if(!req.session.user_id)
+		{
+			// invalid session
+			console.log("\nPLEASE SIGNIN FIRST\n");
+			var page_path = path.join(__dirname + directory_table["signin"]);
+			res.sendFile(page_path);
+			return;
+
+		}
 		
+		// valid session
+		console.log("\ngo to cart page\n");
 		var page_path = path.join(__dirname + directory_table["cart"]);
 		res.sendFile(page_path);
 
@@ -22,7 +34,18 @@ exports.handle_routes = function(server, database, directory_table)
 	// refresh cart table
 	server.get('/cart/refresh_table', function (req, res) {
 
-		var user_id = 1;
+		if(!req.session.user_id)
+		{
+			// invalid session
+			console.log("\nPLEASE SIGNIN FIRST\n");
+			var page_path = path.join(__dirname + directory_table["signin"]);
+			res.sendFile(page_path);
+			return;
+
+		}
+
+		// valid session
+		var user_id = req.session.user_id;
 		// prepare SQL query
 		var sql_query = "SELECT I.isbn AS isbn, B.title AS title, I.price AS price, C.quantity AS quantity "+
 						"FROM (((SELECT * FROM customer_cart WHERE user_id="+user_id+") AS C) "+
@@ -43,7 +66,18 @@ exports.handle_routes = function(server, database, directory_table)
 	/* remove book */
 	server.post('/cart/remove_book', urlencodedParser, function (req, res) {
 
-		var user_id = 1;
+		if(!req.session.user_id)
+		{
+			// invalid session
+			console.log("\nPLEASE SIGNIN FIRST\n");
+			var page_path = path.join(__dirname + directory_table["signin"]);
+			res.sendFile(page_path);
+			return;
+
+		}
+
+		// valid session
+		var user_id = req.session.user_id;
 		// prepare sql statement
 		var selected_isbn = req.body.book_isbn;
 		var sql_query = "DELETE FROM customer_cart "+
@@ -58,11 +92,11 @@ exports.handle_routes = function(server, database, directory_table)
 							"JOIN (inventory AS I) ON (I.isbn = C.isbn)) "+
 							"JOIN (book_info AS B) ON (I.isbn = B.isbn); ";
 		
-			database.query(sql_query2, function (err, rows, fields) {
+			database.query(sql_query2, function (err2, rows2, fields2) {
 				// handle errors
-				if (err) throw err;
+				if (err2) throw err2;
 				// return data
-				res.end(JSON.stringify(rows));
+				res.end(JSON.stringify(rows2));
 			});
 
 		});
@@ -73,7 +107,18 @@ exports.handle_routes = function(server, database, directory_table)
 	/* cart checkout */
 	server.post('/cart/checkout', urlencodedParser, function (req, res) {
 
-		var user_id = 1;
+		if(!req.session.user_id)
+		{
+			// invalid session
+			console.log("\nPLEASE SIGNIN FIRST\n");
+			var page_path = path.join(__dirname + directory_table["signin"]);
+			res.sendFile(page_path);
+			return;
+
+		}
+
+		// valid session
+		var user_id = req.session.user_id;
 		
 		for (var key in req.body)
 		{

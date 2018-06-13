@@ -8,12 +8,22 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 /* INTERFACE FUNCTIONS */
 /*********************************************/
-exports.handle_routes = function(server, database, directory_table)
+exports.handle_routes = function(server, database, directory_table, session)
 {
 
 	// account window
 	server.get('/account', function (req, res) {
+
+		// check session first
+		if(!req.session.user_id)
+		{
+			console.log("\nPLEASE SIGNIN FIRST\n");
+			var page_path = path.join(__dirname + directory_table["signin"]);
+			res.sendFile(page_path);
+			return;
+		}
 		
+		// valid session
 		var page_path = path.join(__dirname + directory_table["account"]);
 		res.sendFile(page_path);
 
@@ -22,7 +32,18 @@ exports.handle_routes = function(server, database, directory_table)
 	// refresh huser account info
 	server.get('/account/refresh_info', function (req, res) {
 
-		var user_id = 1;
+		// check session first
+		if(!req.session.user_id)
+		{
+			console.log("\nPLEASE SIGNIN FIRST\n");
+			var page_path = path.join(__dirname + directory_table["signin"]);
+			res.sendFile(page_path);
+			return;
+		}
+
+		// valid session
+
+		var user_id = req.session.user_id;
 		// get data from user SESSION
 		var sql_query = "SELECT email, login_password AS password, user_name, first_name, last_name, address, phone "+
 						"FROM user_account WHERE id="+user_id+" ;";
@@ -39,7 +60,18 @@ exports.handle_routes = function(server, database, directory_table)
 	/* search books */
 	server.post('/account/update_info', urlencodedParser, function (req, res) {
 
-		var user_id = 1;
+		// check session first
+		if(!req.session.user_id)
+		{
+			console.log("\nPLEASE SIGNIN FIRST\n");
+			var page_path = path.join(__dirname + directory_table["signin"]);
+			res.sendFile(page_path);
+			return;
+		}
+
+		// valid session
+
+		var user_id = req.session.user_id;
 		// prepare sql statement
 		var user_name = req.body.user_name;
 		var user_password = req.body.user_password;
@@ -56,11 +88,15 @@ exports.handle_routes = function(server, database, directory_table)
 						"WHERE id="+user_id+" ;";
 
 		//console.log(sql_query);
+		req.session.user_name = user_name;
+		console.log("\nuser name session : %s\n", req.session.user_name);
 
 		database.query(sql_query, function (err, rows, fields) {
 			// handle errors
 			if (err) throw err;
 			//console.log('Book Title: ', rows[0].Title);
+			//update session variables
+			req.session.user_name = user_name;
 		});
 
 	});

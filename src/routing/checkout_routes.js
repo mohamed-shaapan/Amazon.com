@@ -8,14 +8,25 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 /* INTERFACE FUNCTIONS */
 /*********************************************/
-exports.handle_routes = function(server, database, directory_table)
+exports.handle_routes = function(server, database, directory_table, session)
 {
 
 
 	// refresh cart table
 	server.get('/checkout/refresh_info', function (req, res) {
 
-		var user_id = 1;
+		// check session first
+		if(!req.session.user_id)
+		{
+			console.log("\nPLEASE SIGNIN FIRST\n");
+			var page_path = path.join(__dirname + directory_table["signin"]);
+			res.sendFile(page_path);
+			return;
+		}
+
+		// valid session
+
+		var user_id = req.session.user_id;
 		// Prepare output in JSON format
 		var sql_query = "SELECT first_name, last_name, phone, address "+
 						"FROM user_account "+
@@ -35,12 +46,22 @@ exports.handle_routes = function(server, database, directory_table)
 	/* remove book */
 	server.post('/checkout/submit', urlencodedParser, function (req, res) {
 
+		// check session first
+		if(!req.session.user_id)
+		{
+			console.log("\nPLEASE SIGNIN FIRST\n");
+			var page_path = path.join(__dirname + directory_table["signin"]);
+			res.sendFile(page_path);
+			return;
+		}
+
+		// valid session
 		// extract data
 		var card_number = req.body.card_number;
 		var expiration_date = req.body.expiration_date;
 
 		// retrieve items in cart
-		var user_id = 1;
+		var user_id = req.session.user_id;
 		// prepare SQL query
 		var cart_items_query ="SELECT * "+
 							"FROM customer_cart "+
@@ -62,18 +83,18 @@ exports.handle_routes = function(server, database, directory_table)
 				var insert_query = "INSERT INTO customer_order (user_id, isbn, quantity) "+
 								"VALUES ("+user_id+", "+isbn+", "+quantity+") ;";
 
-				database.query(insert_query, function (err, rows, fields) {
+				database.query(insert_query, function (err2, rows2, fields2) {
 					// handle errors
-					if (err) throw err;
+					if (err2) throw err2;
 				});
 			}
 
 			// remove item from cart
 			var remove_query = "DELETE FROM customer_cart "+
 								"WHERE (user_id="+user_id+") ;";
-			database.query(remove_query, function (err, rows, fields) {
+			database.query(remove_query, function (err2, rows2, fields2) {
 					// handle errors
-					if (err) throw err;
+					if (err2) throw err2;
 			});
 
 			/* redirect to home page */

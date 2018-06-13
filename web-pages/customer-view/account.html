@@ -49,7 +49,7 @@
 			<a id="signout_btn" href="#">Sign Out</a>
 
 			<!-- admin controls -->
-			<div id="admin_controls">
+			<div id="admin_controls" style='display: none;'>
 				<div class="w3-container" style="padding-top: 20px; font-weight: bold; padding-bottom: 5px;">
 					Admin Controls
 				</div>
@@ -82,7 +82,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required id="user_name" />
+						<input type="text" class="w3-input w3-border sh-input" required id="user_name" disabled />
 					</div>
 				</div>
 
@@ -93,7 +93,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="password" class="w3-input w3-border sh-input" required id="user_password" />
+						<input type="password" class="w3-input w3-border sh-input" required id="user_password" disabled />
 					</div>
 				</div>
 
@@ -104,7 +104,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required id="first_name" />
+						<input type="text" class="w3-input w3-border sh-input" required id="first_name" disabled />
 					</div>
 				</div>
 
@@ -115,7 +115,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required id="last_name" />
+						<input type="text" class="w3-input w3-border sh-input" required id="last_name" disabled />
 					</div>
 				</div>
 
@@ -126,7 +126,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required id="user_email" />
+						<input type="text" class="w3-input w3-border sh-input" required id="user_email" disabled />
 					</div>
 				</div>
 
@@ -137,7 +137,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required id="user_phone" />
+						<input type="text" class="w3-input w3-border sh-input" required id="user_phone" disabled />
 					</div>
 				</div>
 
@@ -148,7 +148,7 @@
 					</div>
 
 					<div class="w3-col" style="width: 400px;">
-						<input type="text" class="w3-input w3-border sh-input" required id="user_address" />
+						<input type="text" class="w3-input w3-border sh-input" required id="user_address" disabled />
 					</div>
 				</div>
 
@@ -181,17 +181,6 @@
 
 		$(document).ready(function(){
 
-			/* show/hide admin controls */
-			/******************************************/
-			var display_user_name;
-			var view_admin_controls;
-
-			if(view_admin_controls == false){
-				$("#admin_controls").remove();
-			}
-			$("#display_user_name").text(display_user_name);
-
-
 			/* no match error msg */
 			/******************************************/
 			//$("#no_match_msg").hide();
@@ -217,6 +206,23 @@
 		    	// obtain data
 		    	account_info = JSON.parse(data);
 		    	update_account_fields();
+		    });
+
+		     /* personalized views */
+			/******************************************/
+			/* update rows AJAX */
+			var data_url2 = "http://127.0.0.1:8081/home/update_views";
+		    $.get(data_url2, function(data, status){
+		    	
+		    	// obtain data
+		    	var personal_views = JSON.parse(data);
+		    	$("#display_user_name").text(personal_views['user_name']);
+		    	if(personal_views['credentials'] == 0){
+		    		$("#admin_controls").remove();
+		    	}else{
+		    		$("#admin_controls").show();
+		    	}
+
 		    });
 
 			/* form action listeners */
@@ -261,6 +267,14 @@
 				});
 
 				$(".sh-input").attr('disabled', true);
+
+				var data_url3 = "http://127.0.0.1:8081/home/update_views";
+			    $.get(data_url3, function(data, status){
+			    	// obtain data
+			    	var personal_views = JSON.parse(data);
+			    	$("#display_user_name").text(personal_views['user_name']);
+
+			    });
 			});
 
 		    /* handle site navigation */
@@ -282,7 +296,7 @@
       			$( location ).attr("href", target_url);
 			});
 			$("#signout_btn").click(function(e){
-				var target_url = "http://127.0.0.1:8081/";
+				var target_url = "http://127.0.0.1:8081/signout";
       			$( location ).attr("href", target_url);
 			});
 
