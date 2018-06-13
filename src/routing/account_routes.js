@@ -61,8 +61,6 @@ exports.handle_routes = function(server, database, directory_table)
 			// handle errors
 			if (err) throw err;
 			//console.log('Book Title: ', rows[0].Title);
-			// return data
-			//res.end(JSON.stringify(rows));
 		});
 
 	});
