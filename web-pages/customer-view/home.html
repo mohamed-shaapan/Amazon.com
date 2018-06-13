@@ -82,7 +82,7 @@
 			
 			<!--search and title-->
 			<div class="w3-container" style="margin-bottom:10px;">
-				<span class="w3-text-blue-grey" style="font-size:27px; font-weight:bold; font-family: arial;">Best Sellers!</span>
+				<span id='page_title' class="w3-text-blue-grey" style="font-size:27px; font-weight:bold; font-family: arial;">Best Sellers!</span>
 				<button class="w3-btn w3-blue-grey w3-right" style="margin-top:5px;" onclick="$('#search_modal').show()">Search</button>
 			</div>
 
@@ -347,6 +347,7 @@
 			    	book_list = JSON.parse(data);
 			    	update_books_view();
 				});
+				$('#page_title').text("Search Result");
 			});
 
 		    /* handle site navigation */
