@@ -13,5 +13,7 @@ exports.initialize = function()
 	   console.log("Example app listening at http://%s:%s", host, port);
 	});
 
+	app.use(express.static('/../../resources'));
+
 	return app;
 }

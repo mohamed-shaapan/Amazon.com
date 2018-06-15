@@ -154,7 +154,9 @@ exports.handle_routes = function(server, database, directory_table, session)
 
 		database.query(sql_query, function (err, rows, fields) {
 			// handle errors
-			if (err) throw err;
+			if (err){
+				// book alread exists in database
+			}
 			//console.log('Book Title: ', rows[0].Title);
 			var page_path = path.join(__dirname + directory_table["cart"]);
 			res.sendFile(page_path);
